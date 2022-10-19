@@ -1,6 +1,15 @@
 import Card from '../../components/Card/Card';
+import { CardMock } from '../../types/types';
 
-function MainPage(): JSX.Element {
+function CardReturn({cardTitle, imgSrc} : CardMock, index : number) {
+  return <Card key = {index} cardTitle={cardTitle} imgSrc={imgSrc} />;
+}
+
+type Props = {
+  cardMocksArray : CardMock[];
+}
+
+function MainPage({cardMocksArray} : Props): JSX.Element {
   return (
     <div className="container">
       <section className="film-card">
@@ -102,12 +111,7 @@ function MainPage(): JSX.Element {
           </ul>
 
           <div className="catalog__films-list">
-            <Card title = {'Bohemian Rhapsody'} img = {'img/bohemian-rhapsody.jpg'} />
-            <Card title = {'Pulp Fiction'} img = {'img/pulp-fiction.jpg'} />
-            <Card title = {'Shutter Island'} img = {'img/shutter-island.jpg'} />
-            <Card title = {'No country for old men'} img = {'img/no-country-for-old-men.jpg'} />
-            <Card title = {'Snatch'} img = {'img/snatch.jpg'} />
-            <Card title = {'Aviator'} img = {'img/aviator.jpg'} />
+            { cardMocksArray.map((card, index) => CardReturn(card, index))}
           </div>
 
           <div className="catalog__more">
