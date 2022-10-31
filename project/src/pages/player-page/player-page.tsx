@@ -1,9 +1,23 @@
-function PlayerPage(): JSX.Element {
+import { useParams, Link } from 'react-router-dom';
+import { Films } from '../../types/types';
+import Page404 from '../404Page/404Page';
+
+function PlayerPage({ films }: { films: Films }): JSX.Element {
+  const id = Number(useParams().id);
+  const film = films.find((currentFilm) => currentFilm.id === id);
+  if (!film) {
+    return (<Page404 />);
+  }
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
-
-      <button type="button" className="player__exit">Exit</button>
+      <video src={film.videoSrc} className="player__video" poster="img/player-poster.jpg"></video>
+      <Link
+        type="button"
+        className="player__exit"
+        to={`/films/${id}`}
+      >
+        Exit
+      </Link>
 
       <div className="player__controls">
         <div className="player__controls-row">
@@ -22,7 +36,7 @@ function PlayerPage(): JSX.Element {
             </svg>
             <span>Play</span>
           </button>
-          <div className="player__name">Transpotting</div>
+          <div className="player__name">{film.name}</div>
 
           <button type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">

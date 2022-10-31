@@ -1,12 +1,11 @@
-import Card from '../../components/Card/Card';
-import { CardMock } from '../../types/types';
-
-function CardReturn({cardTitle, imgSrc} : CardMock, index : number) {
-  return <Card key = {index} cardTitle={cardTitle} imgSrc={imgSrc} />;
-}
+import { Link } from 'react-router-dom';
+import FilmList from '../../components/film-list/FilmList';
+import Footer from '../../components/footer/footer';
+import Header from '../../components/header/header';
+import { Films } from '../../types/types';
 
 type Props = {
-  cardMocksArray : CardMock[];
+  cardMocksArray : Films;
 }
 
 function MainPage({cardMocksArray} : Props): JSX.Element {
@@ -18,28 +17,7 @@ function MainPage({cardMocksArray} : Props): JSX.Element {
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
-
-        <header className="page-header film-card__head">
-          <div className="logo">
-            <a className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
-            </li>
-          </ul>
-        </header>
-
+        <Header />
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
@@ -54,19 +32,19 @@ function MainPage({cardMocksArray} : Props): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <Link to={'/player/1'} className="btn btn--play film-card__button" type="button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
-                </button>
-                <button className="btn btn--list film-card__button" type="button">
+                </Link>
+                <Link to={'/mylist'} className="btn btn--list film-card__button" type="button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
                   <span className="film-card__count">9</span>
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -111,7 +89,7 @@ function MainPage({cardMocksArray} : Props): JSX.Element {
           </ul>
 
           <div className="catalog__films-list">
-            { cardMocksArray.map((card, index) => CardReturn(card, index))}
+            { <FilmList films={cardMocksArray} amountToShow={8}/>}
           </div>
 
           <div className="catalog__more">
@@ -119,19 +97,7 @@ function MainPage({cardMocksArray} : Props): JSX.Element {
           </div>
         </section>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <a className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </div>
   );
