@@ -19,7 +19,7 @@ export const filmMocks: Films = [
     overview: 'asdjksadosa',
     details: 'asdkasodosa',
     reviews: reviewsArray,
-    videoSrc: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4'
+    videoSrc: 'https://10.react.pages.academy/static/film/video/matrix.mp4'
   },
   {
     id: 2, name : 'Pulp Fiction',
@@ -42,7 +42,7 @@ export const filmMocks: Films = [
     overview: 'Pulp Fiction is a 1994 American crime film written and directed by Quentin Tarantino, who conceived it with Roger Avary',
     details: 'asdkasodosa',
     reviews: reviewsArray,
-    videoSrc: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4'
+    videoSrc: 'https://10.react.pages.academy/static/film/video/matrix.mp4'
   },
   {
     id: 3,
@@ -63,6 +63,6 @@ export const filmMocks: Films = [
     overview: 'asdjksadosa',
     details: 'asdkasodosa',
     reviews: reviewsArray,
-    videoSrc: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4'
+    videoSrc: 'https://10.react.pages.academy/static/film/video/matrix.mp4'
   }
 ];

@@ -1,4 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
+//import VideoPlayer from '../../components/video-player/video-player';
 import { Films } from '../../types/types';
 import Page404 from '../404Page/404Page';
 
@@ -10,7 +11,12 @@ function PlayerPage({ films }: { films: Films }): JSX.Element {
   }
   return (
     <div className="player">
-      <video src={film.videoSrc} className="player__video" poster="img/player-poster.jpg"></video>
+      <video
+        src={film.videoSrc}
+        className="player__video"
+        poster={film.posterImageGreat}
+      >
+      </video>
       <Link
         type="button"
         className="player__exit"
