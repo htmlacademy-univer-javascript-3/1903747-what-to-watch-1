@@ -7,17 +7,24 @@ type Props = {
 }
 
 function FilmList({ films, amountToShow }: Props): JSX.Element {
+  if (films.length === 0) {
+    return (
+      <h2>We couldn&apos;t find any movies similar to this one :&#40;</h2>
+    );
+  }
   return (
     <div className="catalog__films-list">
       {
-        films.slice(0, amountToShow).map((card, index) =>
-          (<Card
-            key={index}
-            id={card.id}
-            name={card.name}
-            posterImageGreat={card.posterImageGreat}
-            videoSrc={card.videoSrc}
-          />)
+        films.slice(0, amountToShow).map((card) =>
+          (
+            <Card
+              id={card.id}
+              key={0}
+              name={card.name}
+              posterImageGreat={card.previewImage}
+              videoSrc={card.previewVideoLink}
+            />
+          )
         )
       }
     </div>

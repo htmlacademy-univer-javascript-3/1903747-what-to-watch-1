@@ -1,7 +1,7 @@
+import { useEffect, useRef, useState } from 'react';
 type videoPlayerProps = {
   videoSrc: string;
 }
-import { useEffect, useRef, useState } from 'react';
 
 function PreviewPlayer({ videoSrc }: videoPlayerProps): JSX.Element {
   const [isPlaying, setIsPlaying] = useState(true);
