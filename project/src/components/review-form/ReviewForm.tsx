@@ -1,6 +1,10 @@
 import React, { ChangeEvent } from 'react';
 
-function ReviewForm(): JSX.Element {
+type ReviewFormProps = {
+	backgroundColor: string;
+}
+
+function ReviewForm({backgroundColor}: ReviewFormProps): JSX.Element {
   const [formData, setFormData] = React.useState({
     'review-text': '',
     'rating': 0
@@ -15,7 +19,6 @@ function ReviewForm(): JSX.Element {
     const { name, value } = evt.target;
     setFormData({ ...formData, [name]: Number(value) });
   };
-
   return (
     <form action="#" className="add-review__form">
       <div className="rating">
@@ -52,7 +55,7 @@ function ReviewForm(): JSX.Element {
         </div>
       </div>
 
-      <div className="add-review__text">
+      <div className="add-review__text" style={{background: backgroundColor}}>
         <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" onChange={reviewTextChangeHandler}></textarea>
         <div className="add-review__submit">
           <button className="add-review__btn" type="submit">Post</button>

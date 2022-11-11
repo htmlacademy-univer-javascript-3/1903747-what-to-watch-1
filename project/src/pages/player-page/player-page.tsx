@@ -12,9 +12,9 @@ function PlayerPage({ films }: { films: Films }): JSX.Element {
   return (
     <div className="player">
       <video
-        src={film.videoSrc}
+        src={film.videoLink}
         className="player__video"
-        poster={film.posterImageGreat}
+        poster={film.backgroundImage}
       >
       </video>
       <Link

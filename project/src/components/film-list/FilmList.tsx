@@ -7,6 +7,11 @@ type Props = {
 }
 
 function FilmList({ films, amountToShow }: Props): JSX.Element {
+  if (films.length === 0) {
+    return (
+      <h2>We couldn't find any movies similar to this one :&#40;</h2>
+    );
+  }
   return (
     <div className="catalog__films-list">
       {
@@ -15,8 +20,8 @@ function FilmList({ films, amountToShow }: Props): JSX.Element {
             key={index}
             id={card.id}
             name={card.name}
-            posterImageGreat={card.posterImageGreat}
-            videoSrc={card.videoSrc}
+            posterImageGreat={card.previewImage}
+            videoSrc={card.previewVideoLink}
           />)
         )
       }

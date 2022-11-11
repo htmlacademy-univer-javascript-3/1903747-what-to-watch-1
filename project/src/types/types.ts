@@ -1,18 +1,22 @@
 export type Film = {
   id: number;
   name: string;
-  posterImageGreat: string;
-  posterImageSmall: string;
+  posterImage: string;
+  previewImage: string;
+  backgroundImage: string;
+  backgroundColor: string;
+  description: string;
   genre: string;
-  releaseDate: Date;
-  score: number;
-  numOfScores: number;
-  actors: string[];
+  released: number;
+  rating: number;
+  scoresCount: number;
+  starring: string[];
   director: string;
   reviews: Reviews;
-  overview: string;
-  details: string;
-  videoSrc: string;
+  runTime: number;
+  isFavorite: boolean;
+  videoLink: string;
+  previewVideoLink: string;
 }
 
 export type Films = Film[];
@@ -25,3 +29,4 @@ export type Review = {
 }
 
 export type Reviews = Review[];
+
