@@ -17,5 +17,5 @@ const ratingConverter = (rating: number) => {
 export default ratingConverter;
 
 export function div(val: number, by : number){
-    return (val - val % by) / by;
+  return (val - val % by) / by;
 }
