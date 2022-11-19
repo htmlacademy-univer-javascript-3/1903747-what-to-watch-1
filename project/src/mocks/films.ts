@@ -3,6 +3,30 @@ import { reviewsArray } from './reviews';
 
 export const filmMocks: Films = [
   {
+    name: 'No Country for Old Men',
+    posterImage: 'https://10.react.pages.academy/static/film/poster/No_Country_for_Old_Men.jpg',
+    previewImage: 'https://10.react.pages.academy/static/film/preview/no-country-for-old-men.jpg',
+    backgroundImage: 'https://10.react.pages.academy/static/film/background/No_Country_for_Old_Men.jpg',
+    backgroundColor: '#BDAD8F',
+    description: 'Violence and mayhem ensue after a hunter stumbles upon a drug deal gone wrong and more than two million dollars in cash near the Rio Grande.',
+    rating: 4.1,
+    scoresCount: 764976,
+    director: 'Ethan Coen',
+    starring: [
+      'Tommy Lee Jones',
+      'Javier Bardem',
+      'Josh Brolin'
+    ],
+    runTime: 122,
+    genre: 'Crime',
+    released: 2007,
+    id: 6,
+    reviews: reviewsArray,
+    isFavorite: false,
+    videoLink: 'https://10.react.pages.academy/static/film/video/bike.mp4',
+    previewVideoLink: 'https://10.react.pages.academy/static/film/video/traffic.mp4'
+  },
+  {
     id: 1,
     name: 'Bohemian Rhapsody',
     posterImage: 'https://10.react.pages.academy/static/film/poster/Bohemian_Rhapsody.jpg',
@@ -26,11 +50,12 @@ export const filmMocks: Films = [
     previewVideoLink: 'https://10.react.pages.academy/static/film/video/dog.mp4'
   },
   {
-    id: 2, name: 'Pulp Fiction',
+    id: 2,
+    name: 'Pulp Fiction',
     posterImage: 'https://10.react.pages.academy/static/film/poster/Pulp_Fiction.jpg',
     previewImage: 'https://10.react.pages.academy/static/film/preview/pulp-fiction.jpg',
     backgroundImage: 'https://10.react.pages.academy/static/film/background/Pulp_Fiction.jpg',
-    genre: 'criminal',
+    genre: 'Crime',
     released: 1997,
     rating: 8.8,
     scoresCount: 520,
@@ -58,7 +83,7 @@ export const filmMocks: Films = [
     posterImage: 'https://10.react.pages.academy/static/film/poster/Shutter_Island.jpg',
     previewImage: 'https://10.react.pages.academy/static/film/preview/shutter-island.jpg',
     backgroundImage: 'https://10.react.pages.academy/static/film/background/Shutter_Island.jpg',
-    genre: 'thriller',
+    genre: 'Thriller',
     released: 2000,
     rating: 8.4,
     scoresCount: 1201,
@@ -93,7 +118,7 @@ export const filmMocks: Films = [
       'Benicio Del Toro'
     ],
     runTime: 104,
-    genre: 'criminal',
+    genre: 'Crime',
     released: 2000,
     id: 4,
     reviews: reviewsArray,
@@ -101,4 +126,28 @@ export const filmMocks: Films = [
     videoLink: 'https://10.react.pages.academy/static/film/video/matrix.mp4',
     previewVideoLink: 'https://10.react.pages.academy/static/film/video/dog.mp4'
   },
+  {
+    name: 'Snatch',
+    posterImage: 'https://10.react.pages.academy/static/film/poster/Snatch.jpg',
+    previewImage: 'https://10.react.pages.academy/static/film/preview/snatch.jpg',
+    backgroundImage: 'https://10.react.pages.academy/static/film/background/Snatch.jpg',
+    backgroundColor: '#FDFDFC',
+    description: 'Unscrupulous boxing promoters, violent bookmakers, a Russian gangster, incompetent amateur robbers and supposedly Jewish jewelers fight to track down a priceless stolen diamond.',
+    rating: 8.5,
+    scoresCount: 716577,
+    director: 'Guy Ritchie',
+    starring: [
+      'Jason Statham',
+      'Brad Pitt',
+      'Benicio Del Toro'
+    ],
+    runTime: 104,
+    genre: 'Crime',
+    released: 2000,
+    id: 5,
+    reviews: reviewsArray,
+    isFavorite: false,
+    videoLink: 'https://10.react.pages.academy/static/film/video/matrix.mp4',
+    previewVideoLink: 'https://10.react.pages.academy/static/film/video/dog.mp4'
+  }
 ];
