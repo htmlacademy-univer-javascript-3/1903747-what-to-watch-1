@@ -20,7 +20,7 @@ function GenrePanel(): JSX.Element {
       {
         genres.map((genre) =>
           (
-            <li onClick={() => setGenreHandler(genre)} className={genre === currentGenre ? 'catalog__genres-item catalog__genres-item--active' : 'catalog__genres-item'}>
+            <li onClick={() => setGenreHandler(genre)} key={1} className={genre === currentGenre ? 'catalog__genres-item catalog__genres-item--active' : 'catalog__genres-item'}>
               <Link to="#" className='catalog__genres-link'>{genre}</Link>
             </li>
           )
