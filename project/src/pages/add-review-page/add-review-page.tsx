@@ -1,9 +1,13 @@
 import { Link, useParams } from 'react-router-dom';
 import ReviewForm from '../../components/review-form/ReviewForm';
+import { useAppDispatch } from '../../hooks';
+import { resetAmountToShow } from '../../store/action';
 import { Films } from '../../types/types';
 import Page404 from '../404Page/404Page';
 
 function AddReviewPage({films} : {films : Films}): JSX.Element {
+  const dispatch = useAppDispatch();
+  dispatch(resetAmountToShow());
   const id = Number(useParams().id);
   const film = films.find((currentFilm) => currentFilm.id === id);
   if (!film) {
@@ -33,7 +37,7 @@ function AddReviewPage({films} : {films : Films}): JSX.Element {
                 <a href="film-page.html" className="breadcrumbs__link">{film.name}</a>
               </li>
               <li className="breadcrumbs__item">
-                <a className="breadcrumbs__link">Add review</a>
+                <a className="breadcrumbs__link" href='/'>Add review</a>
               </li>
             </ul>
           </nav>
@@ -45,7 +49,7 @@ function AddReviewPage({films} : {films : Films}): JSX.Element {
               </div>
             </li>
             <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
+              <a className="user-block__link" href='/'>Sign out</a>
             </li>
           </ul>
         </header>
