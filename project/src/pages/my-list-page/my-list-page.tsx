@@ -1,6 +1,10 @@
 import Header from '../../components/header/header';
+import { useAppDispatch } from '../../hooks';
+import { resetAmountToShow } from '../../store/action';
 
 function MyListPage(): JSX.Element {
+  const dispatch = useAppDispatch();
+  dispatch(resetAmountToShow());
   return (
     <div className="user-page">
       <Header />

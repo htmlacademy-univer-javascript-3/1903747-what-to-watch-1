@@ -5,8 +5,12 @@ import Page404 from '../404Page/404Page';
 import FilmList from '../../components/film-list/FilmList';
 import Header from '../../components/header/header';
 import FilmTabs from '../../components/film-tabs/film-tabs';
+import { useAppDispatch } from '../../hooks';
+import { resetAmountToShow } from '../../store/action';
 
 function MoviePage({ films }: { films: Films }): JSX.Element {
+  const dispatch = useAppDispatch();
+  dispatch(resetAmountToShow());
   const id = Number(useParams().id);
   const film = films.find((currentFilm) => currentFilm.id === id);
   if (!film) {

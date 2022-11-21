@@ -24,13 +24,13 @@ function FilmTabs({ film }: { film: Film }): JSX.Element {
       <nav className="film-nav film-card__nav">
         <ul className="film-nav__list">
           <li className={currentTab === FilmTabsStatus.Overview ? 'film-nav__item film-nav__item--active' : 'film-nav__item film-nav__item'}>
-            <a type="button" onClick={() => setCurrentTab(FilmTabsStatus.Overview)} className="film-nav__link">Overview</a>
+            <a type="button" href='/' onClick={() => setCurrentTab(FilmTabsStatus.Overview)} className="film-nav__link">Overview</a>
           </li>
           <li className={currentTab === FilmTabsStatus.Details ? 'film-nav__item film-nav__item--active' : 'film-nav__item'}>
-            <a type="button" onClick={() => setCurrentTab(FilmTabsStatus.Details)} className="film-nav__link">Details</a>
+            <a type="button" href='/' onClick={() => setCurrentTab(FilmTabsStatus.Details)} className="film-nav__link">Details</a>
           </li>
           <li className={currentTab === FilmTabsStatus.Reviews ? 'film-nav__item film-nav__item--active' : 'film-nav__item'}>
-            <a type="button" onClick={() => setCurrentTab(FilmTabsStatus.Reviews)} className="film-nav__link">Reviews</a>
+            <a type="button" href='/' onClick={() => setCurrentTab(FilmTabsStatus.Reviews)} className="film-nav__link">Reviews</a>
           </li>
         </ul>
       </nav>

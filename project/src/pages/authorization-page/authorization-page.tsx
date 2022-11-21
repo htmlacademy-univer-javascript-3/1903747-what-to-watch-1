@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
+import { useAppDispatch } from '../../hooks';
+import { resetAmountToShow } from '../../store/action';
 
 function AuthorizationPage(): JSX.Element {
+  const dispatch = useAppDispatch();
+  dispatch(resetAmountToShow());
   return (
     <div className="user-page">
       <header className="page-header user-page__head">

@@ -5,6 +5,7 @@ import GenrePanel from '../../components/genre-nav-panel/GenreNavPanel';
 import Header from '../../components/header/header';
 import { useAppSelector } from '../../hooks';
 import { Films } from '../../types/types';
+import ShowMoreButton from '../../components/show-more-button/ShowMoreButton';
 
 type Props = {
   cardMocksArray : Films;
@@ -13,6 +14,11 @@ type Props = {
 function MainPage({cardMocksArray} : Props): JSX.Element {
   const mainFilm = cardMocksArray[2];
   const genreFilms = useAppSelector((state) => state.genreFilmList);
+  const amountToShow = useAppSelector((state) => state.amountToShow);
+  let isButtonHidden = false;
+  if (genreFilms.length < 9 || amountToShow > 8) {
+    isButtonHidden = true;
+  }
 
   return (
     <div className="container">
@@ -61,10 +67,8 @@ function MainPage({cardMocksArray} : Props): JSX.Element {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <GenrePanel />
-          {<FilmList films={genreFilms} amountToShow={8}/>}
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          {<FilmList films={genreFilms} amountToShow={amountToShow}/>}
+          {isButtonHidden ? '' : <ShowMoreButton /> }
         </section>
 
         <Footer />
@@ -74,3 +78,4 @@ function MainPage({cardMocksArray} : Props): JSX.Element {
 }
 
 export default MainPage;
+

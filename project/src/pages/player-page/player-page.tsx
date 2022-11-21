@@ -1,9 +1,12 @@
 import { useParams, Link } from 'react-router-dom';
-//import VideoPlayer from '../../components/video-player/video-player';
+import { useAppDispatch } from '../../hooks';
+import { resetAmountToShow } from '../../store/action';
 import { Films } from '../../types/types';
 import Page404 from '../404Page/404Page';
 
 function PlayerPage({ films }: { films: Films }): JSX.Element {
+  const dispatch = useAppDispatch();
+  dispatch(resetAmountToShow());
   const id = Number(useParams().id);
   const film = films.find((currentFilm) => currentFilm.id === id);
   if (!film) {
