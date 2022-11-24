@@ -23,14 +23,14 @@ function FilmTabs({ film }: { film: Film }): JSX.Element {
     <div className="film-card__desc">
       <nav className="film-nav film-card__nav">
         <ul className="film-nav__list">
-          <li className={currentTab === FilmTabsStatus.Overview ? 'film-nav__item film-nav__item--active' : 'film-nav__item film-nav__item'}>
-            <a type="button" href='/' onClick={() => setCurrentTab(FilmTabsStatus.Overview)} className="film-nav__link">Overview</a>
+          <li style={{cursor: 'pointer'}} className={currentTab === FilmTabsStatus.Overview ? 'film-nav__item film-nav__item--active' : 'film-nav__item film-nav__item'}>
+            <a type="button" onClick={() => setCurrentTab(FilmTabsStatus.Overview)} className="film-nav__link">Overview</a>
           </li>
-          <li className={currentTab === FilmTabsStatus.Details ? 'film-nav__item film-nav__item--active' : 'film-nav__item'}>
-            <a type="button" href='/' onClick={() => setCurrentTab(FilmTabsStatus.Details)} className="film-nav__link">Details</a>
+          <li style={{cursor: 'pointer'}} className={currentTab === FilmTabsStatus.Details ? 'film-nav__item film-nav__item--active' : 'film-nav__item'}>
+            <a type="button" onClick={() => setCurrentTab(FilmTabsStatus.Details)} className="film-nav__link">Details</a>
           </li>
-          <li className={currentTab === FilmTabsStatus.Reviews ? 'film-nav__item film-nav__item--active' : 'film-nav__item'}>
-            <a type="button" href='/' onClick={() => setCurrentTab(FilmTabsStatus.Reviews)} className="film-nav__link">Reviews</a>
+          <li style={{cursor: 'pointer'}} className={currentTab === FilmTabsStatus.Reviews ? 'film-nav__item film-nav__item--active' : 'film-nav__item'}>
+            <a type="button" onClick={() => setCurrentTab(FilmTabsStatus.Reviews)} className="film-nav__link">Reviews</a>
           </li>
         </ul>
       </nav>

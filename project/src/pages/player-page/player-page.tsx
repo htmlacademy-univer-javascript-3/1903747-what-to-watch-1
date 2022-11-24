@@ -1,16 +1,20 @@
 import { useParams, Link } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
+import LoadingScreen from '../../components/loading-screen/loading-screen';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { resetAmountToShow } from '../../store/action';
-import { Films } from '../../types/types';
 import Page404 from '../404Page/404Page';
 
-function PlayerPage({ films }: { films: Films }): JSX.Element {
+function PlayerPage(): JSX.Element {
   const dispatch = useAppDispatch();
   dispatch(resetAmountToShow());
   const id = Number(useParams().id);
-  const film = films.find((currentFilm) => currentFilm.id === id);
+  const isLoading = useAppSelector((state) => state.isDataLoaded);
+  const film = useAppSelector((state) => state.films.find((stateFilm) => stateFilm.id === id));
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
   if (!film) {
-    return (<Page404 />);
+    return <Page404 />;
   }
   return (
     <div className="player">

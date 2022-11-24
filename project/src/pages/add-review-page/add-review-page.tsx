@@ -1,15 +1,20 @@
 import { Link, useParams } from 'react-router-dom';
+import LoadingScreen from '../../components/loading-screen/loading-screen';
 import ReviewForm from '../../components/review-form/ReviewForm';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { resetAmountToShow } from '../../store/action';
-import { Films } from '../../types/types';
 import Page404 from '../404Page/404Page';
 
-function AddReviewPage({films} : {films : Films}): JSX.Element {
+function AddReviewPage(): JSX.Element {
   const dispatch = useAppDispatch();
   dispatch(resetAmountToShow());
+
   const id = Number(useParams().id);
-  const film = films.find((currentFilm) => currentFilm.id === id);
+  const film = useAppSelector((state) => state.films.find((currentFilm) => currentFilm.id === id));
+  const isLoading = useAppSelector((state) => state.isDataLoaded);
+  if (isLoading) {
+    return (<LoadingScreen />);
+  }
   if (!film) {
     return (<Page404 />);
   }
