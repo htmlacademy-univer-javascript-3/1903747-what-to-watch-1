@@ -9,7 +9,8 @@ export enum AppRouteProps {
 
 export enum AuthorizationStatus {
   Auth = 'AUTH',
-  NoAuth = 'NOAUTH'
+  NoAuth = 'NOAUTH',
+  Unknown = 'UNKNOWN'
 }
 
 export enum FilmTabsStatus {
@@ -17,6 +18,12 @@ export enum FilmTabsStatus {
   Details = 'DETAILS',
   Reviews = 'REVIEWS'
 }
+
+export enum APIRoute {
+  Films = '/films'
+}
+
+export const TIMEOUT_SHOW_ERROR = 5000;
 
 export const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 

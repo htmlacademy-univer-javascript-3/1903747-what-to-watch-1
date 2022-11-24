@@ -1,5 +1,7 @@
 import { Films } from '../../types/types';
+import { unID } from '../../utils';
 import Card from '../Card/Card';
+
 
 type Props = {
   films: Films;
@@ -19,7 +21,7 @@ function FilmList({ films, amountToShow }: Props): JSX.Element {
           (
             <Card
               id={card.id}
-              key={0}
+              key={unID()}
               name={card.name}
               posterImageGreat={card.previewImage}
               videoSrc={card.previewVideoLink}

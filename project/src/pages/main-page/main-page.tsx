@@ -4,27 +4,31 @@ import Footer from '../../components/footer/footer';
 import GenrePanel from '../../components/genre-nav-panel/GenreNavPanel';
 import Header from '../../components/header/header';
 import { useAppSelector } from '../../hooks';
-import { Films } from '../../types/types';
 import ShowMoreButton from '../../components/show-more-button/ShowMoreButton';
+import LoadingScreen from '../../components/loading-screen/loading-screen';
 
-type Props = {
-  cardMocksArray : Films;
-}
+function MainPage(): JSX.Element {
+  const isLoading = useAppSelector((state) => state.isDataLoaded);
 
-function MainPage({cardMocksArray} : Props): JSX.Element {
-  const mainFilm = cardMocksArray[2];
-  const genreFilms = useAppSelector((state) => state.genreFilmList);
+  const genreFilms = useAppSelector((state) => state.genreFilms);
+  let headerFilm = useAppSelector((state) => state.headerFilm);
+  if (headerFilm === null) { headerFilm = genreFilms[0]; }
+
   const amountToShow = useAppSelector((state) => state.amountToShow);
   let isButtonHidden = false;
   if (genreFilms.length < 9 || amountToShow > 8) {
     isButtonHidden = true;
   }
-
+  if (isLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
   return (
     <div className="container">
       <section className="film-card">
         <div className="film-card__bg">
-          <img src={mainFilm.backgroundImage} alt={mainFilm.name} />
+          <img src={headerFilm.backgroundImage} alt={headerFilm.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -32,18 +36,18 @@ function MainPage({cardMocksArray} : Props): JSX.Element {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src={mainFilm.posterImage} alt={`${mainFilm.name} poster`} width="218" height="327" />
+              <img src={headerFilm.posterImage} alt={`${headerFilm.name} poster`} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{mainFilm.name}</h2>
+              <h2 className="film-card__title">{headerFilm.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{mainFilm.genre}</span>
-                <span className="film-card__year">{mainFilm.released}</span>
+                <span className="film-card__genre">{headerFilm.genre}</span>
+                <span className="film-card__year">{headerFilm.released}</span>
               </p>
 
               <div className="film-card__buttons">
-                <Link to={`/player/${mainFilm.id}`} className="btn btn--play film-card__button" type="button">
+                <Link to={`/player/${headerFilm.id}`} className="btn btn--play film-card__button" type="button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
@@ -67,8 +71,8 @@ function MainPage({cardMocksArray} : Props): JSX.Element {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <GenrePanel />
-          {<FilmList films={genreFilms} amountToShow={amountToShow}/>}
-          {isButtonHidden ? '' : <ShowMoreButton /> }
+          {<FilmList films={genreFilms} amountToShow={amountToShow} />}
+          {isButtonHidden ? '' : <ShowMoreButton />}
         </section>
 
         <Footer />

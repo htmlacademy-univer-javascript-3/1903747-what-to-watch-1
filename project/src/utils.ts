@@ -19,3 +19,8 @@ export default ratingConverter;
 export function div(val: number, by : number){
   return (val - val % by) / by;
 }
+
+export function unID() {
+  const id = `id${Math.random().toString(16).slice(2)}`;
+  return id;
+}

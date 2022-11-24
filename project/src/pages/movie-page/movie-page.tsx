@@ -1,20 +1,27 @@
 import { Link, useParams } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
-import { Films } from '../../types/types';
 import Page404 from '../404Page/404Page';
 import FilmList from '../../components/film-list/FilmList';
 import Header from '../../components/header/header';
 import FilmTabs from '../../components/film-tabs/film-tabs';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { resetAmountToShow } from '../../store/action';
+import LoadingScreen from '../../components/loading-screen/loading-screen';
 
-function MoviePage({ films }: { films: Films }): JSX.Element {
+function MoviePage(): JSX.Element {
   const dispatch = useAppDispatch();
   dispatch(resetAmountToShow());
+
   const id = Number(useParams().id);
-  const film = films.find((currentFilm) => currentFilm.id === id);
+  const films = useAppSelector((state) => state.films);
+  const isLoading = useAppSelector((state) => state.isDataLoaded);
+  const film = films.find((stateFilm) => stateFilm.id === id);
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
   if (!film) {
-    return (<Page404 />);
+    return <Page404 />;
   }
   return (
     <>
