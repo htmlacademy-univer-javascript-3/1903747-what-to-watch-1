@@ -5,13 +5,15 @@ import GenrePanel from '../../components/genre-nav-panel/GenreNavPanel';
 import Header from '../../components/header/header';
 import { useAppSelector } from '../../hooks';
 import ShowMoreButton from '../../components/show-more-button/ShowMoreButton';
-import LoadingScreen from '../../components/loading-screen/loading-screen';
+import LoadingMain from '../../components/loading-screen/loading-main/loading-main';
+import { AppRouteProps, AuthorizationStatus } from '../../const';
 
 function MainPage(): JSX.Element {
   const isLoading = useAppSelector((state) => state.isDataLoaded);
 
   const genreFilms = useAppSelector((state) => state.genreFilms);
   let headerFilm = useAppSelector((state) => state.headerFilm);
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
   if (headerFilm === null) { headerFilm = genreFilms[0]; }
 
   const amountToShow = useAppSelector((state) => state.amountToShow);
@@ -21,7 +23,7 @@ function MainPage(): JSX.Element {
   }
   if (isLoading) {
     return (
-      <LoadingScreen />
+      <LoadingMain />
     );
   }
   return (
@@ -53,12 +55,12 @@ function MainPage(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </Link>
-                <Link to={'/mylist'} className="btn btn--list film-card__button" type="button">
+                <Link to={authStatus === AuthorizationStatus.Auth ? AppRouteProps.MyList : AppRouteProps.SignIn} className="btn btn--list film-card__button" type="button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
-                  <span className="film-card__count">9</span>
+                  {authStatus === AuthorizationStatus.Auth ? <span className="film-card__count">9</span> : ''}
                 </Link>
               </div>
             </div>
