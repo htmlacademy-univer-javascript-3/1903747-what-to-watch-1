@@ -7,7 +7,9 @@ export const updateGenreFilms = createAction('films/updateGenreFilms');
 export const increaseAmountToShow = createAction('films/increaseAmountToShow');
 export const resetAmountToShow = createAction('films/resetAmountToShow');
 export const loadFilms = createAction<Films>('films/loadFilms');
+
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
+
 export const setError = createAction<string | null>('films/setError');
 export const setIsDataLoaded = createAction<boolean>('films/setIsDataLoaded');
 

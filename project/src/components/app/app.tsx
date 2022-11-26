@@ -5,11 +5,13 @@ import MyListPage from '../../pages/my-list-page/my-list-page';
 import Page404 from '../../pages/404Page/404Page';
 import MoviePage from '../../pages/movie-page/movie-page';
 import PlayerPage from '../../pages/player-page/player-page';
-import { AppRouteProps, AuthorizationStatus } from '../../const';
+import { AppRouteProps } from '../../const';
 import PrivateRoute from '../private-route/private-route';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
 
 function App(): JSX.Element {
+  const authStatus = useAppSelector((store) => store.authorizationStatus);
   return (
     <BrowserRouter>
       <Routes>
@@ -21,7 +23,7 @@ function App(): JSX.Element {
         <Route
           path={AppRouteProps.MyList}
           element={
-            <PrivateRoute authStatus={AuthorizationStatus.NoAuth}><MyListPage /></PrivateRoute>
+            <PrivateRoute authStatus={authStatus}><MyListPage /></PrivateRoute>
           }
         />
         <Route path="*" element={<Page404 />}/>

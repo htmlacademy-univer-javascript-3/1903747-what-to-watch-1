@@ -10,4 +10,3 @@ function LoadingScreen(): JSX.Element {
 }
 
 export default LoadingScreen;
-

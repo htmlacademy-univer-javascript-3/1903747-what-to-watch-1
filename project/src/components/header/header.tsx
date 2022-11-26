@@ -1,6 +1,11 @@
 import { Link } from 'react-router-dom';
+import { AppRouteProps, AuthorizationStatus } from '../../const';
+import { useAppSelector } from '../../hooks';
+import AuthHeader from './user-block-auth';
 
 function Header(): JSX.Element {
+
+  const authStatus = useAppSelector((store) => store.authorizationStatus);
   return (
     <header className="page-header film-card__head">
       <div className="logo">
@@ -12,14 +17,7 @@ function Header(): JSX.Element {
       </div>
 
       <ul className="user-block">
-        <li className="user-block__item">
-          <div className="user-block__avatar">
-            <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-          </div>
-        </li>
-        <li className="user-block__item">
-          <a className="user-block__link" href='/'>Sign out</a>
-        </li>
+        {authStatus === AuthorizationStatus.Auth ? <AuthHeader /> : <Link className="user-block__link" to={AppRouteProps.SignIn}>Sign in</Link>}
       </ul>
     </header>
   );

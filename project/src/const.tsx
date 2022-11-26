@@ -20,7 +20,9 @@ export enum FilmTabsStatus {
 }
 
 export enum APIRoute {
-  Films = '/films'
+  Films = '/films',
+  Login = '/login',
+  Logout = '/logout'
 }
 
 export const TIMEOUT_SHOW_ERROR = 5000;

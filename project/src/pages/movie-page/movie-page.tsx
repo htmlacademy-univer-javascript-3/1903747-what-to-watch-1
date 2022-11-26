@@ -7,6 +7,7 @@ import FilmTabs from '../../components/film-tabs/film-tabs';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { resetAmountToShow } from '../../store/action';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
+import { AppRouteProps, AuthorizationStatus } from '../../const';
 
 function MoviePage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -16,6 +17,8 @@ function MoviePage(): JSX.Element {
   const films = useAppSelector((state) => state.films);
   const isLoading = useAppSelector((state) => state.isDataLoaded);
   const film = films.find((stateFilm) => stateFilm.id === id);
+
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
 
   if (isLoading) {
     return <LoadingScreen />;
@@ -50,14 +53,14 @@ function MoviePage(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </Link>
-                <Link to={'/mylist'} className="btn btn--list film-card__button" type="button">
+                <Link to={authStatus === AuthorizationStatus.Auth ? AppRouteProps.MyList : AppRouteProps.SignIn} className="btn btn--list film-card__button" type="button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </Link>
-                <Link to={`/films/${id}/review`} className="btn film-card__button">Add review</Link>
+                <Link to={authStatus === AuthorizationStatus.Auth ? `/films/${id}/review` : AppRouteProps.SignIn} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
