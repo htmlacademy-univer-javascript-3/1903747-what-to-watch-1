@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
-import LoadingScreen from '../../components/loading-screen/loading-screen';
+import AuthHeader from '../../components/header/user-block-auth';
+import LoadingScreen from '../../components/loading-components/loading-screen';
 import ReviewForm from '../../components/review-form/ReviewForm';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { resetAmountToShow } from '../../store/action';
@@ -10,8 +11,8 @@ function AddReviewPage(): JSX.Element {
   dispatch(resetAmountToShow());
 
   const id = Number(useParams().id);
-  const film = useAppSelector((state) => state.films.find((currentFilm) => currentFilm.id === id));
-  const isLoading = useAppSelector((state) => state.isDataLoaded);
+  const film = useAppSelector((state) => state.films.data.find((currentFilm) => currentFilm.id === id));
+  const isLoading = useAppSelector((state) => state.films.isLoading);
   if (isLoading) {
     return (<LoadingScreen />);
   }
@@ -47,16 +48,7 @@ function AddReviewPage(): JSX.Element {
             </ul>
           </nav>
 
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link" href='/'>Sign out</a>
-            </li>
-          </ul>
+          <AuthHeader />
         </header>
 
         <div className="film-card__poster film-card__poster--small">

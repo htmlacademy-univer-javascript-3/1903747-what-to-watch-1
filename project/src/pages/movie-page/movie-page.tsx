@@ -1,34 +1,44 @@
 import { Link, useParams } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import Page404 from '../404Page/404Page';
-import FilmList from '../../components/film-list/FilmList';
 import Header from '../../components/header/header';
 import FilmTabs from '../../components/film-tabs/film-tabs';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { resetAmountToShow } from '../../store/action';
-import LoadingScreen from '../../components/loading-screen/loading-screen';
+import LoadingScreen from '../../components/loading-components/loading-screen';
 import { AppRouteProps, AuthorizationStatus } from '../../const';
+import { fetchFilmAction, fetchReviewsAction, fetchSimilarFilmsAction } from '../../store/api-actions';
+import { memo, useEffect } from 'react';
+import FilmList from '../../components/film-list/FilmList';
+import AddReviewButton from '../../components/add-review-button/add-review-button';
 
 function MoviePage(): JSX.Element {
   const dispatch = useAppDispatch();
-  dispatch(resetAmountToShow());
-
   const id = Number(useParams().id);
-  const films = useAppSelector((state) => state.films);
-  const isLoading = useAppSelector((state) => state.isDataLoaded);
-  const film = films.find((stateFilm) => stateFilm.id === id);
 
   const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const film = useAppSelector((state) => state.currentFilm.data);
+  const similarFilms = useAppSelector((state) => state.similarFilms.data);
+  const isFilmLoading = useAppSelector((state) => state.currentFilm.isLoading);
+  const isSimilarFilmsLoading = useAppSelector((state) => state.similarFilms.isLoading);
 
-  if (isLoading) {
+  useEffect(() => {
+    dispatch(fetchSimilarFilmsAction(id));
+    dispatch(resetAmountToShow());
+    dispatch(fetchReviewsAction(id));
+    dispatch(fetchFilmAction(id));
+  }, []);
+
+  if (isFilmLoading || isSimilarFilmsLoading) {
     return <LoadingScreen />;
   }
-  if (!film) {
+
+  if (!film || !similarFilms) {
     return <Page404 />;
   }
   return (
     <>
-      <section style={{background: film.backgroundColor}} className="film-card film-card--full">
+      <section style={{ background: film.backgroundColor }} className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
             <img src={film.backgroundImage} alt={film.name} />
@@ -60,7 +70,7 @@ function MoviePage(): JSX.Element {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </Link>
-                <Link to={authStatus === AuthorizationStatus.Auth ? `/films/${id}/review` : AppRouteProps.SignIn} className="btn film-card__button">Add review</Link>
+                {authStatus === AuthorizationStatus.Auth ? <AddReviewButton id={id} /> : ''}
               </div>
             </div>
           </div>
@@ -71,7 +81,7 @@ function MoviePage(): JSX.Element {
             <div className="film-card__poster film-card__poster--big">
               <img src={film.posterImage} alt="The Grand Budapest Hotel poster" width="218" height="327" />
             </div>
-            <FilmTabs film={film}/>
+            <FilmTabs film={film} />
           </div>
         </div>
       </section>
@@ -79,7 +89,7 @@ function MoviePage(): JSX.Element {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <FilmList films={films.filter((filmInArray) => film.genre === filmInArray.genre && filmInArray.id !== film.id)} amountToShow={4} />
+          <FilmList films={similarFilms.filter((filmInArray) => film.genre === filmInArray.genre && filmInArray.id !== film.id)} amountToShow={4} />
         </section>
         <Footer />
       </div>
@@ -87,5 +97,4 @@ function MoviePage(): JSX.Element {
   );
 }
 
-export default MoviePage;
-
+export default memo(MoviePage);

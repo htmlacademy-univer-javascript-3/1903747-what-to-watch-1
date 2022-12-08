@@ -1,18 +1,33 @@
 import React, { ChangeEvent } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks';
+import { fetchPostReview } from '../../store/api-actions';
+import { ApiReview } from '../../types/review';
 
 type ReviewFormProps = {
 	backgroundColor: string;
 }
 
 function ReviewForm({backgroundColor}: ReviewFormProps): JSX.Element {
-  const [formData, setFormData] = React.useState({
-    'review-text': '',
-    'rating': 0
+  const id = Number(useParams().id);
+  const [formData, setFormData] = React.useState<ApiReview>({
+    comment: '',
+    rating: 5,
+    id: id
   });
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const reviewTextChangeHandler = (evt: ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = evt.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const formPost = (event: React.FormEvent) => {
+    event.preventDefault();
+    dispatch(fetchPostReview(formData));
+    navigate(-1);
   };
 
   const ratingChangeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -20,13 +35,14 @@ function ReviewForm({backgroundColor}: ReviewFormProps): JSX.Element {
     setFormData({ ...formData, [name]: Number(value) });
   };
   return (
-    <form action="#" className="add-review__form">
+    <form onSubmit={formPost} className="add-review__form">
       <div className="rating">
         <div className="rating__stars">
+
           <input className="rating__input" id="star-10" type="radio" name="rating" value="10" onChange={ratingChangeHandler} />
           <label className="rating__label" htmlFor="star-10">Rating 10</label>
 
-          <input className="rating__input" id="star-9" type="radio" name="rating" value="9" onChange={ratingChangeHandler} />
+          <input className="rating__input" id="star-9" type="radio" name="rating" value="9" onChange={ratingChangeHandler}/>
           <label className="rating__label" htmlFor="star-9">Rating 9</label>
 
           <input className="rating__input" id="star-8" type="radio" name="rating" value="8" onChange={ratingChangeHandler} checked />
@@ -56,7 +72,7 @@ function ReviewForm({backgroundColor}: ReviewFormProps): JSX.Element {
       </div>
 
       <div className="add-review__text" style={{background: backgroundColor}}>
-        <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" onChange={reviewTextChangeHandler}></textarea>
+        <textarea className="add-review__textarea" name="comment" id="review-text" placeholder="Review text" onChange={reviewTextChangeHandler}></textarea>
         <div className="add-review__submit">
           <button className="add-review__btn" type="submit">Post</button>
         </div>

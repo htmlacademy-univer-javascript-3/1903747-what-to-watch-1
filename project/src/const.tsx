@@ -21,8 +21,16 @@ export enum FilmTabsStatus {
 
 export enum APIRoute {
   Films = '/films',
+  PromoFilm = '/promo',
   Login = '/login',
+  Reviews = '/comments',
   Logout = '/logout'
+}
+
+export enum NameSpace {
+  MainData = 'MAINDATA',
+  User = 'USER',
+  Film = 'FILM'
 }
 
 export const TIMEOUT_SHOW_ERROR = 5000;

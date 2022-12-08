@@ -12,7 +12,6 @@ export type Film = {
   scoresCount: number;
   starring: string[];
   director: string;
-  reviews: Reviews;
   runTime: number;
   isFavorite: boolean;
   videoLink: string;
@@ -20,13 +19,3 @@ export type Film = {
 }
 
 export type Films = Film[];
-
-export type Review = {
-  text: string;
-  score: number;
-  userName: string;
-  publishDate: Date;
-}
-
-export type Reviews = Review[];
-
