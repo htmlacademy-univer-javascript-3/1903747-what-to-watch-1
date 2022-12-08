@@ -1,15 +1,16 @@
-import { useParams, Link } from 'react-router-dom';
-import LoadingScreen from '../../components/loading-screen/loading-screen';
+import { useParams, useNavigate } from 'react-router-dom';
+import LoadingScreen from '../../components/loading-components/loading-screen';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { resetAmountToShow } from '../../store/action';
 import Page404 from '../404Page/404Page';
 
 function PlayerPage(): JSX.Element {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   dispatch(resetAmountToShow());
   const id = Number(useParams().id);
   const isLoading = useAppSelector((state) => state.isDataLoaded);
-  const film = useAppSelector((state) => state.films.find((stateFilm) => stateFilm.id === id));
+  const film = useAppSelector((state) => state.films.data.find((stateFilm) => stateFilm.id === id));
   if (isLoading) {
     return <LoadingScreen />;
   }
@@ -24,13 +25,13 @@ function PlayerPage(): JSX.Element {
         poster={film.backgroundImage}
       >
       </video>
-      <Link
+      <a
         type="button"
         className="player__exit"
-        to={`/films/${id}`}
+        onClick={() => navigate(-1)}
       >
         Exit
-      </Link>
+      </a>
 
       <div className="player__controls">
         <div className="player__controls-row">

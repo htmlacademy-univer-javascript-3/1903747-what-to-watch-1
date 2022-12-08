@@ -1,11 +1,11 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { getToken } from './token';
-import {StatusCodes} from 'http-status-codes';
+import { StatusCodes } from 'http-status-codes';
 import { processErrorHandler } from './process-error-handler';
 
 type MyErrorResponse = {
-	error: string;
-  }
+  error: string;
+}
 
 const StatusCodeMapping: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,
@@ -42,7 +42,6 @@ export const createAPI = (): AxiosInstance => {
       if (error.response && shouldDisplayError(error.response)) {
         processErrorHandler(error.response.data.error);
       }
-
       throw error;
     }
   );

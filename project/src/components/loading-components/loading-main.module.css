@@ -48,6 +48,14 @@
   margin-right: 15px;
 }
 
+.image {
+  display: block;
+  content: '';
+  width: 280px;
+  height: 175px;
+  background: linear-gradient(#392424, #4A3535);
+}
+
 .blinkingElement {
   opacity: 1;
   animation: blinkingAnimation 1s ease-in-out infinite;

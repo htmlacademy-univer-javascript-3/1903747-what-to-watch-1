@@ -1,26 +1,26 @@
-import { Review, Reviews } from '../../types/types';
 import { months } from '../../const';
+import { Review, Reviews } from '../../types/review';
 
 type ReviewsTabProps = {
   reviews: Reviews;
 }
 
 function RenderSingleReview(review: Review): JSX.Element {
-  const date = review.publishDate;
+  const date = new Date(review.date);
   const month = months[Math.round(date.getMonth() * 10) / 10];
   const day = date.getDate();
   const year = date.getFullYear();
   return (
     <div className="review">
       <blockquote className="review__quote">
-        <p className="review__text">{review.text}</p>
+        <p className="review__text">{review.comment}</p>
         <footer className="review__details">
-          <cite className="review__author">{review.userName}</cite>
+          <cite className="review__author">{review.user.name}</cite>
           <time className="review__date" dateTime={`${year}-${date.getMonth()}-${day}`}>{month} {day}, {year}</time>
         </footer>
       </blockquote>
 
-      <div className="review__rating">{review.score}</div>
+      <div className="review__rating">{review.rating}</div>
     </div>
   );
 }
@@ -41,3 +41,4 @@ function ReviewsTab({ reviews }: ReviewsTabProps): JSX.Element {
 }
 
 export default ReviewsTab;
+

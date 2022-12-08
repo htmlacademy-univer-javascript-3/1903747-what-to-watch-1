@@ -1,19 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { genres } from '../../const';
 import { useAppDispatch } from '../../hooks';
-import { changeGenreAction } from '../../store/action';
+import { changeGenreAction, resetAmountToShow } from '../../store/action';
 import { unID } from '../../utils';
 
 function GenrePanel(): JSX.Element {
   const [currentGenre, setCurrentGenre] = useState(genres[0]);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    dispatch(changeGenreAction(currentGenre));
-  }, [currentGenre]);
-
   const setGenreHandler = (genre: string) => {
+    dispatch(changeGenreAction(genre));
+    dispatch(resetAmountToShow());
     setCurrentGenre(genre);
   };
   return (
