@@ -1,4 +1,7 @@
 import { useAppSelector } from '../../hooks';
+import { getCurrentGenre, getFilms, getFilmsLoading } from '../../store/film-process/film-process-selectors';
+import { getAmountToShow } from '../../store/main-data/main-data-selectors';
+import { filterFilmByGenre } from '../../utils';
 import FilmList from '../film-list/FilmList';
 import GenrePanel from '../genre-nav-panel/GenreNavPanel';
 import LoadingFilmList from '../loading-components/film-list-loading/film-list-loading';
@@ -6,11 +9,14 @@ import LoadingGenrePanel from '../loading-components/genre-panel-loading/genre-p
 import ShowMoreButton from '../show-more-button/ShowMoreButton';
 
 function Catalog(): JSX.Element {
-  const isFilmsLoading = useAppSelector((state) => state.films.isLoading);
-  const genreFilms = useAppSelector((state) => state.genreFilms);
-  const amountToShow = useAppSelector((state) => state.amountToShow);
+  const isFilmsLoading = useAppSelector(getFilmsLoading);
+  const films = useAppSelector(getFilms);
+  const currentGenre = useAppSelector(getCurrentGenre);
+  let genreFilms = filterFilmByGenre(films, currentGenre);
+  const amountToShow = useAppSelector(getAmountToShow);
 
   let isButtonHidden = false;
+  if (!genreFilms) {genreFilms = [];}
   if (genreFilms.length < 9 || amountToShow > 8) {
     isButtonHidden = true;
   }

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
-import { resetAmountToShow } from '../../store/action';
+import { resetAmountToShow } from '../../store/main-data/main-data';
 import styles from './Page404-styles.module.css';
 
 function Page404(): JSX.Element {

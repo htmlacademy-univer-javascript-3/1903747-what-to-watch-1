@@ -3,21 +3,23 @@ import AuthHeader from '../../components/header/user-block-auth';
 import LoadingScreen from '../../components/loading-components/loading-screen';
 import ReviewForm from '../../components/review-form/ReviewForm';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { resetAmountToShow } from '../../store/action';
+import { getFilms, getFilmsLoading } from '../../store/film-process/film-process-selectors';
+import { resetAmountToShow } from '../../store/main-data/main-data';
 import Page404 from '../404Page/404Page';
 
 function AddReviewPage(): JSX.Element {
   const dispatch = useAppDispatch();
-  dispatch(resetAmountToShow());
+  dispatch(resetAmountToShow);
 
   const id = Number(useParams().id);
-  const film = useAppSelector((state) => state.films.data.find((currentFilm) => currentFilm.id === id));
-  const isLoading = useAppSelector((state) => state.films.isLoading);
+  const film = useAppSelector(getFilms).find((currentFilm) => currentFilm.id === id);
+  const isLoading = useAppSelector(getFilmsLoading);
   if (isLoading) {
     return (<LoadingScreen />);
   }
+
   if (!film) {
-    return (<Page404 />);
+    return <Page404 />;
   }
   return (
     <section className="film-card film-card--full" style={{background: film.backgroundColor}}>

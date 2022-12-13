@@ -1,13 +1,22 @@
 import { Link } from 'react-router-dom';
 import Header from '../../../components/header/header';
-import { useAppSelector } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { AppRouteProps, AuthorizationStatus } from '../../../const';
 import LoadingPromo from '../../../components/loading-components/promo-loading/promo-loading';
+import { getPromo, getPromoLoading } from '../../../store/film-process/film-process-selectors';
+import { getAuthStatus } from '../../../store/user-process/user-process-selectors';
+import { useEffect } from 'react';
+import { fetchPromoFilmAction } from '../../../store/api-actions';
 
 function MainPagePromo(): JSX.Element {
-  const isPromoLoading = useAppSelector((state) => state.promoFilm.isLoading);
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
-  const promoFilm = useAppSelector((state) => state.promoFilm.data);
+  const dispatch = useAppDispatch();
+  const isPromoLoading = useAppSelector(getPromoLoading);
+  const authStatus = useAppSelector(getAuthStatus);
+  const promoFilm = useAppSelector(getPromo);
+  useEffect(() => {
+    dispatch(fetchPromoFilmAction());
+  }, []);
+
   if (isPromoLoading || !promoFilm) {
     return <LoadingPromo />;
   }

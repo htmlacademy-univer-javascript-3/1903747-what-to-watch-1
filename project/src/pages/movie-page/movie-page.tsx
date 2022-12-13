@@ -4,30 +4,33 @@ import Page404 from '../404Page/404Page';
 import Header from '../../components/header/header';
 import FilmTabs from '../../components/film-tabs/film-tabs';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { resetAmountToShow } from '../../store/action';
 import LoadingScreen from '../../components/loading-components/loading-screen';
 import { AppRouteProps, AuthorizationStatus } from '../../const';
 import { fetchFilmAction, fetchReviewsAction, fetchSimilarFilmsAction } from '../../store/api-actions';
-import { memo, useEffect } from 'react';
+import { useEffect } from 'react';
 import FilmList from '../../components/film-list/FilmList';
 import AddReviewButton from '../../components/add-review-button/add-review-button';
+import { getAuthStatus } from '../../store/user-process/user-process-selectors';
+import { getFilm, getFilmLoading, getSimilar, getSimilarLoading } from '../../store/film-process/film-process-selectors';
+import { resetAmountToShow } from '../../store/main-data/main-data';
 
 function MoviePage(): JSX.Element {
   const dispatch = useAppDispatch();
   const id = Number(useParams().id);
 
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
-  const film = useAppSelector((state) => state.currentFilm.data);
-  const similarFilms = useAppSelector((state) => state.similarFilms.data);
-  const isFilmLoading = useAppSelector((state) => state.currentFilm.isLoading);
-  const isSimilarFilmsLoading = useAppSelector((state) => state.similarFilms.isLoading);
+  const authStatus = useAppSelector(getAuthStatus);
+  const film = useAppSelector(getFilm);
+  const similarFilms = useAppSelector(getSimilar);
+
+  const isFilmLoading = useAppSelector(getFilmLoading);
+  const isSimilarFilmsLoading = useAppSelector(getSimilarLoading);
 
   useEffect(() => {
     dispatch(fetchSimilarFilmsAction(id));
     dispatch(resetAmountToShow());
     dispatch(fetchReviewsAction(id));
     dispatch(fetchFilmAction(id));
-  }, []);
+  }, [id]);
 
   if (isFilmLoading || isSimilarFilmsLoading) {
     return <LoadingScreen />;
@@ -97,4 +100,4 @@ function MoviePage(): JSX.Element {
   );
 }
 
-export default memo(MoviePage);
+export default MoviePage;

@@ -1,9 +1,10 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { increaseAmountToShow, resetAmountToShow } from '../../store/action';
+import { increaseAmountToShow, resetAmountToShow } from '../../store/main-data/main-data';
+import { getAmountToShow } from '../../store/main-data/main-data-selectors';
 
 function ShowMoreButton(): JSX.Element {
   const dispatch = useAppDispatch();
-  const howMuchToShow = useAppSelector((store) => store.amountToShow);
+  const howMuchToShow = useAppSelector(getAmountToShow);
 
   const showMoreButtonHandler = (value: number) => {
     if (value === 8) {

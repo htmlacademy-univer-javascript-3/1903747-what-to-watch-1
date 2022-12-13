@@ -7,6 +7,7 @@ import DetailsTab from './details-tab';
 import ReviewsTab from './reviews-tab';
 import { useAppSelector } from '../../hooks';
 import { Reviews } from '../../types/review';
+import { getReviews } from '../../store/film-process/film-process-selectors';
 
 function RenderTab(tab: string, film: Film, reviews: Reviews) {
   switch (tab) {
@@ -24,7 +25,7 @@ type FilmTabsProps = {
 }
 
 function FilmTabs({film} : FilmTabsProps): JSX.Element {
-  const reviews = useAppSelector((state) => state.currentFilm.reviews);
+  const reviews = useAppSelector(getReviews);
   const [currentTab, setCurrentTab] = useState(FilmTabsStatus.Overview);
 
   return (
