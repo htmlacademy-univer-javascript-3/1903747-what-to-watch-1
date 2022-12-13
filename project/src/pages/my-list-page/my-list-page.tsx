@@ -1,6 +1,6 @@
 import Header from '../../components/header/header';
 import { useAppDispatch } from '../../hooks';
-import { resetAmountToShow } from '../../store/action';
+import { resetAmountToShow } from '../../store/main-data/main-data';
 
 function MyListPage(): JSX.Element {
   const dispatch = useAppDispatch();

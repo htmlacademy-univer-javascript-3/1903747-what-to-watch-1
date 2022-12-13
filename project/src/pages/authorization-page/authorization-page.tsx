@@ -2,8 +2,8 @@ import { FormEvent, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import { useAppDispatch } from '../../hooks';
-import { resetAmountToShow } from '../../store/action';
 import { loginAction } from '../../store/api-actions';
+import { resetAmountToShow } from '../../store/main-data/main-data';
 import { AuthData } from '../../types/user-data';
 
 function AuthorizationPage(): JSX.Element {

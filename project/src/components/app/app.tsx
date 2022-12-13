@@ -9,9 +9,10 @@ import { AppRouteProps } from '../../const';
 import PrivateRoute from '../private-route/private-route';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
+import { getAuthStatus } from '../../store/user-process/user-process-selectors';
 
 function App(): JSX.Element {
-  const authStatus = useAppSelector((store) => store.authorizationStatus);
+  const authStatus = useAppSelector(getAuthStatus);
   return (
     <BrowserRouter>
       <Routes>
@@ -19,14 +20,19 @@ function App(): JSX.Element {
         <Route path={AppRouteProps.SignIn} element={<AuthorizationPage />} />
         <Route path={AppRouteProps.Player} element={<PlayerPage />} />
         <Route path={AppRouteProps.Film} element={<MoviePage />} />
-        <Route path={AppRouteProps.AddReview} element={<AddReviewPage />} />
+        <Route
+          path={AppRouteProps.AddReview}
+          element={
+            <PrivateRoute authStatus={authStatus}><AddReviewPage /></PrivateRoute>
+          }
+        />
         <Route
           path={AppRouteProps.MyList}
           element={
             <PrivateRoute authStatus={authStatus}><MyListPage /></PrivateRoute>
           }
         />
-        <Route path="*" element={<Page404 />}/>
+        <Route path="*" element={<Page404 />} />
       </Routes>
     </BrowserRouter>
   );

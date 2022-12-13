@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { getToken } from './token';
 import { StatusCodes } from 'http-status-codes';
-import { processErrorHandler } from './process-error-handler';
+import { ProcessErrorHandler } from './process-error-handler';
 
 type MyErrorResponse = {
   error: string;
@@ -40,7 +40,7 @@ export const createAPI = (): AxiosInstance => {
     (response) => response,
     (error: AxiosError<MyErrorResponse>) => {
       if (error.response && shouldDisplayError(error.response)) {
-        processErrorHandler(error.response.data.error);
+        ProcessErrorHandler(error.response.data.error);
       }
       throw error;
     }

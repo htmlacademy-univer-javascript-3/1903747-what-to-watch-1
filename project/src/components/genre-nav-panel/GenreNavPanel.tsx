@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { genres } from '../../const';
-import { useAppDispatch } from '../../hooks';
-import { changeGenreAction, resetAmountToShow } from '../../store/action';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setGenre } from '../../store/film-process/film-process';
+import { getGenres } from '../../store/film-process/film-process-selectors';
+import { resetAmountToShow } from '../../store/main-data/main-data';
 import { unID } from '../../utils';
 
 function GenrePanel(): JSX.Element {
+  const genres = useAppSelector(getGenres) ?? ['All genres'];
   const [currentGenre, setCurrentGenre] = useState(genres[0]);
   const dispatch = useAppDispatch();
-
   const setGenreHandler = (genre: string) => {
-    dispatch(changeGenreAction(genre));
+    dispatch(setGenre(genre));
     dispatch(resetAmountToShow());
     setCurrentGenre(genre);
   };

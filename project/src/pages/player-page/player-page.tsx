@@ -1,7 +1,8 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import LoadingScreen from '../../components/loading-components/loading-screen';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { resetAmountToShow } from '../../store/action';
+import { getFilms, getFilmsLoading } from '../../store/film-process/film-process-selectors';
+import { resetAmountToShow } from '../../store/main-data/main-data';
 import Page404 from '../404Page/404Page';
 
 function PlayerPage(): JSX.Element {
@@ -9,8 +10,8 @@ function PlayerPage(): JSX.Element {
   const dispatch = useAppDispatch();
   dispatch(resetAmountToShow());
   const id = Number(useParams().id);
-  const isLoading = useAppSelector((state) => state.isDataLoaded);
-  const film = useAppSelector((state) => state.films.data.find((stateFilm) => stateFilm.id === id));
+  const isLoading = useAppSelector(getFilmsLoading);
+  const film = useAppSelector(getFilms).find((stateFilm) => stateFilm.id === id);
   if (isLoading) {
     return <LoadingScreen />;
   }
