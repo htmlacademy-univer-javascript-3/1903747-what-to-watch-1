@@ -16,5 +16,8 @@ export const getSimilarLoading = (state: State): boolean => state[NameSpace.Film
 export const getPromo = (state: State): Film | null => state[NameSpace.Film].promoFilm.data;
 export const getPromoLoading = (state: State): boolean => state[NameSpace.Film].promoFilm.isLoading;
 
+export const getFavoriteLoading = (state: State): boolean => state[NameSpace.Film].favoriteFilms.isLoading;
+export const getFavoriteFilms = (state: State): Films | null => state[NameSpace.Film].favoriteFilms.data;
+
 export const getCurrentGenre = (state: State): string => state[NameSpace.Film].currentGenre;
 export const getGenres = (state: State): string[] | null => state[NameSpace.Film].genres;

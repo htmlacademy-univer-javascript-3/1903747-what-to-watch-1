@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setGenre } from '../../store/film-process/film-process';
 import { getGenres } from '../../store/film-process/film-process-selectors';
 import { resetAmountToShow } from '../../store/main-data/main-data';
-import { unID } from '../../utils';
+import { unID } from '../../utils/film-utils';
 
 function GenrePanel(): JSX.Element {
   const genres = useAppSelector(getGenres) ?? ['All genres'];

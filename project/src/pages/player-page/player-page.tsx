@@ -1,31 +1,43 @@
+import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import LoadingScreen from '../../components/loading-components/loading-screen';
+import PlayButton from '../../components/player-buttons/play-button';
+import FullscreenButton from '../../components/UI/fullscreen-button';
+import PlayerControls from '../../components/UI/palyer-controller';
+import VideoPlayer from '../../components/UI/video-player';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getFilms, getFilmsLoading } from '../../store/film-process/film-process-selectors';
-import { resetAmountToShow } from '../../store/main-data/main-data';
-import Page404 from '../404Page/404Page';
+import { fetchFilmAction } from '../../store/api-actions';
+import { getFilm, getFilmLoading } from '../../store/film-process/film-process-selectors';
+import { resetAmountToShow, setIsPlaying } from '../../store/main-data/main-data';
+import Page404 from '../not-found-page/not-found-page';
 
 function PlayerPage(): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  dispatch(resetAmountToShow());
+
   const id = Number(useParams().id);
-  const isLoading = useAppSelector(getFilmsLoading);
-  const film = useAppSelector(getFilms).find((stateFilm) => stateFilm.id === id);
+  const isLoading = useAppSelector(getFilmLoading);
+  const film = useAppSelector(getFilm);
+
+  useEffect(() => {
+    dispatch(setIsPlaying(true));
+  }, [id, dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchFilmAction(id));
+    dispatch(resetAmountToShow());
+  }, [id, dispatch]);
+
   if (isLoading) {
     return <LoadingScreen />;
   }
   if (!film) {
     return <Page404 />;
   }
+
   return (
     <div className="player">
-      <video
-        src={film.videoLink}
-        className="player__video"
-        poster={film.backgroundImage}
-      >
-      </video>
+      <VideoPlayer videoLink={film.videoLink} backgroundImage={film.backgroundImage} />
       <a
         type="button"
         className="player__exit"
@@ -35,30 +47,12 @@ function PlayerPage(): JSX.Element {
       </a>
 
       <div className="player__controls">
+        <PlayerControls />
         <div className="player__controls-row">
-          <div className="player__time">
-            <progress className="player__progress" value="30" max="100"></progress>
-            <div className="player__toggler">Toggler</div>
-            <style>.player__toggler{'left: 30%;'}</style>
-          </div>
-          <div className="player__time-value">1:30:29</div>
-        </div>
-
-        <div className="player__controls-row">
-          <button type="button" className="player__play">
-            <svg viewBox="0 0 19 19" width="19" height="19">
-              <use xlinkHref="#play-s"></use>
-            </svg>
-            <span>Play</span>
-          </button>
+          <PlayButton />
           <div className="player__name">{film.name}</div>
 
-          <button type="button" className="player__full-screen">
-            <svg viewBox="0 0 27 27" width="27" height="27">
-              <use xlinkHref="#full-screen"></use>
-            </svg>
-            <span>Full screen</span>
-          </button>
+          <FullscreenButton />
         </div>
       </div>
     </div>

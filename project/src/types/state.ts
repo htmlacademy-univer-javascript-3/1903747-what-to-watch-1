@@ -7,13 +7,25 @@ export type State = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
 
+export type PostFavoriteStatus = {
+  id: number;
+  isFavorite: boolean;
+}
+
 export type UserProcess = {
   authorizationStatus: AuthorizationStatus;
+  avatarUrl: string;
 }
 
 export type MainData = {
   amountToShow: number;
   error: string | null;
+  player: {
+	isPlaying : boolean;
+	timeLeft : string;
+	playerToggler : number;
+	fullscreenStatus : boolean;
+  };
 }
 
 export type FilmData = {
@@ -33,6 +45,10 @@ export type FilmData = {
   similarFilms: {
     data: Films | null;
     isLoading: boolean;
+  };
+  favoriteFilms: {
+	data: Films | null;
+	isLoading: boolean;
   };
   currentGenre: string;
   genres: string[] | null;

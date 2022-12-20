@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
 import Header from '../../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { AppRouteProps, AuthorizationStatus } from '../../../const';
 import LoadingPromo from '../../../components/loading-components/promo-loading/promo-loading';
 import { getPromo, getPromoLoading } from '../../../store/film-process/film-process-selectors';
 import { getAuthStatus } from '../../../store/user-process/user-process-selectors';
 import { useEffect } from 'react';
-import { fetchPromoFilmAction } from '../../../store/api-actions';
+import { fetchFavoriteFilmsAction, fetchPromoFilmAction } from '../../../store/api-actions';
+import MyListButton from '../../../components/UI/my-list-button/my-list-button';
+import { AuthorizationStatus } from '../../../const';
 
 function MainPagePromo(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -15,7 +16,13 @@ function MainPagePromo(): JSX.Element {
   const promoFilm = useAppSelector(getPromo);
   useEffect(() => {
     dispatch(fetchPromoFilmAction());
-  }, []);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (authStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoriteFilmsAction());
+    }
+  }, [dispatch, authStatus]);
 
   if (isPromoLoading || !promoFilm) {
     return <LoadingPromo />;
@@ -48,13 +55,7 @@ function MainPagePromo(): JSX.Element {
                 </svg>
                 <span>Play</span>
               </Link>
-              <Link to={authStatus === AuthorizationStatus.Auth ? AppRouteProps.MyList : AppRouteProps.SignIn} className="btn btn--list film-card__button" type="button">
-                <svg viewBox="0 0 19 20" width="19" height="20">
-                  <use xlinkHref="#add"></use>
-                </svg>
-                <span>My list</span>
-                {authStatus === AuthorizationStatus.Auth ? <span className="film-card__count">9</span> : ''}
-              </Link>
+              <MyListButton authStatus={authStatus} id={promoFilm.id}/>
             </div>
           </div>
         </div>

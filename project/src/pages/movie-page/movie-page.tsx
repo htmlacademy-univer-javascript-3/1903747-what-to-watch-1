@@ -1,23 +1,23 @@
 import { Link, useParams } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
-import Page404 from '../404Page/404Page';
+import Page404 from '../not-found-page/not-found-page';
 import Header from '../../components/header/header';
 import FilmTabs from '../../components/film-tabs/film-tabs';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import LoadingScreen from '../../components/loading-components/loading-screen';
-import { AppRouteProps, AuthorizationStatus } from '../../const';
-import { fetchFilmAction, fetchReviewsAction, fetchSimilarFilmsAction } from '../../store/api-actions';
+import { AuthorizationStatus } from '../../const';
+import { fetchFavoriteFilmsAction, fetchFilmAction, fetchReviewsAction, fetchSimilarFilmsAction } from '../../store/api-actions';
 import { useEffect } from 'react';
-import FilmList from '../../components/film-list/FilmList';
+import FilmList from '../../components/film-list/film-list';
 import AddReviewButton from '../../components/add-review-button/add-review-button';
 import { getAuthStatus } from '../../store/user-process/user-process-selectors';
 import { getFilm, getFilmLoading, getSimilar, getSimilarLoading } from '../../store/film-process/film-process-selectors';
 import { resetAmountToShow } from '../../store/main-data/main-data';
+import MyListButton from '../../components/UI/my-list-button/my-list-button';
 
 function MoviePage(): JSX.Element {
   const dispatch = useAppDispatch();
   const id = Number(useParams().id);
-
   const authStatus = useAppSelector(getAuthStatus);
   const film = useAppSelector(getFilm);
   const similarFilms = useAppSelector(getSimilar);
@@ -30,7 +30,13 @@ function MoviePage(): JSX.Element {
     dispatch(resetAmountToShow());
     dispatch(fetchReviewsAction(id));
     dispatch(fetchFilmAction(id));
-  }, [id]);
+  }, [id, dispatch]);
+
+  useEffect(() => {
+    if (authStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoriteFilmsAction());
+    }
+  }, [authStatus, dispatch]);
 
   if (isFilmLoading || isSimilarFilmsLoading) {
     return <LoadingScreen />;
@@ -66,13 +72,7 @@ function MoviePage(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </Link>
-                <Link to={authStatus === AuthorizationStatus.Auth ? AppRouteProps.MyList : AppRouteProps.SignIn} className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </Link>
+                <MyListButton authStatus={authStatus} id={film.id} />
                 {authStatus === AuthorizationStatus.Auth ? <AddReviewButton id={id} /> : ''}
               </div>
             </div>
@@ -92,7 +92,11 @@ function MoviePage(): JSX.Element {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <FilmList films={similarFilms.filter((filmInArray) => film.genre === filmInArray.genre && filmInArray.id !== film.id)} amountToShow={4} />
+          <FilmList
+            films={similarFilms.filter((filmInArray) => film.genre === filmInArray.genre && filmInArray.id !== film.id)}
+            amountToShow={4}
+            notFoundMessage={'We couldn&apos;t find any movies similar to this one :&#40;'}
+          />
         </section>
         <Footer />
       </div>

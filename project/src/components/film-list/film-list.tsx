@@ -1,17 +1,21 @@
 import { Films } from '../../types/types';
-import { unID } from '../../utils';
-import Card from '../Card/Card';
+import { unID } from '../../utils/film-utils';
+import Card from '../card/card';
 
-
-type Props = {
-  films: Films;
+type FilmListProps = {
+  films: Films | null;
+  notFoundMessage: string;
   amountToShow?: number;
 }
 
-function FilmList({ films, amountToShow }: Props): JSX.Element {
+function FilmList({ films, amountToShow, notFoundMessage }: FilmListProps): JSX.Element {
+  if (!films) {
+    return <h3>Sorry, but we couldn&apos;t download the movies</h3>;
+  }
+
   if (films.length === 0) {
     return (
-      <h2>We couldn&apos;t find any movies similar to this one :&#40;</h2>
+      <h3>{notFoundMessage}</h3>
     );
   }
   return (

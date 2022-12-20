@@ -1,11 +1,11 @@
 import { Link, useParams } from 'react-router-dom';
 import AuthHeader from '../../components/header/user-block-auth';
 import LoadingScreen from '../../components/loading-components/loading-screen';
-import ReviewForm from '../../components/review-form/ReviewForm';
+import ReviewForm from '../../components/review-form/review-form';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getFilms, getFilmsLoading } from '../../store/film-process/film-process-selectors';
 import { resetAmountToShow } from '../../store/main-data/main-data';
-import Page404 from '../404Page/404Page';
+import Page404 from '../not-found-page/not-found-page';
 
 function AddReviewPage(): JSX.Element {
   const dispatch = useAppDispatch();
