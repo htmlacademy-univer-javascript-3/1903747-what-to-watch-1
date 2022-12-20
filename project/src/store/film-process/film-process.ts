@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { genres, NameSpace } from '../../const';
 import { FilmData } from '../../types/state';
-import { sortByAlpabet } from '../../utils';
-import { fetchFilmAction, fetchFilmsAction, fetchPromoFilmAction, fetchReviewsAction, fetchSimilarFilmsAction } from '../api-actions';
+import { sortByAlpabet } from '../../utils/math-utils';
+import { fetchFavoriteFilmsAction, fetchFilmAction, fetchFilmsAction, fetchPostFavoriteAction, fetchPromoFilmAction, fetchReviewsAction, fetchSimilarFilmsAction } from '../api-actions';
 
 const initialState: FilmData = {
   films: {
@@ -21,6 +21,10 @@ const initialState: FilmData = {
   similarFilms: {
     data: null,
     isLoading: true,
+  },
+  favoriteFilms: {
+    data: null,
+    isLoading: true
   },
   currentGenre: genres[0],
   genres: null,
@@ -52,7 +56,7 @@ export const filmData = createSlice({
         state.films.isLoading = false;
         if (!state.genres) {
           const notFilteredGenres: string[] = [];
-          films.map((film, key) => { notFilteredGenres[key] = film.genre; } );
+          films.map((film, key) => { notFilteredGenres[key] = film.genre; });
           state.genres = [genres[0], ...sortByAlpabet([...new Set(notFilteredGenres)])];
         }
       })
@@ -72,6 +76,16 @@ export const filmData = createSlice({
       })
       .addCase(fetchReviewsAction.fulfilled, (state, action) => {
         state.currentFilm.reviews = action.payload;
+      })
+      .addCase(fetchFavoriteFilmsAction.pending, (state) => {
+        state.favoriteFilms.isLoading = true;
+      })
+      .addCase(fetchPostFavoriteAction.pending, (state) => {
+        state.favoriteFilms.isLoading = true;
+      })
+      .addCase(fetchFavoriteFilmsAction.fulfilled, (state, action) => {
+        state.favoriteFilms.data = action.payload;
+        state.favoriteFilms.isLoading = false;
       });
   }
 });

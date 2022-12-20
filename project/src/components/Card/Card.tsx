@@ -2,14 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PreviewPlayer from '../preview-player/preview-player';
 
-type Props = {
+type CardProps = {
   id: number;
   name: string;
   posterImageGreat: string;
   videoSrc: string;
 }
 
-function Card({ id, name, posterImageGreat, videoSrc}: Props): JSX.Element {
+function Card({ id, name, posterImageGreat, videoSrc}: CardProps): JSX.Element {
   const [isFocused, setIsFocused] = React.useState(false);
   let mouseTimer: string | number | NodeJS.Timeout | undefined;
   return (

@@ -28,6 +28,15 @@ function RenderSingleReview(review: Review): JSX.Element {
 function ReviewsTab({ reviews }: ReviewsTabProps): JSX.Element {
   const firstColumnArray = reviews.filter((review, index) => index % 2 === 0);
   const secondColumnArray = reviews.filter((review, index) => index % 2 === 1);
+
+  if (!reviews[0]) {
+    return (
+      <div className="film-card__reviews film-card__row">
+        <h3>No one has reviewed this film yet. Be the first!</h3>
+      </div>
+    );
+  }
+
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">

@@ -1,5 +1,5 @@
 import { Film } from '../../types/types';
-import ratingConverter from '../../utils';
+import ratingConverter from '../../utils/film-utils';
 
 function OverviewTab({ film }: { film: Film }): JSX.Element {
   return (

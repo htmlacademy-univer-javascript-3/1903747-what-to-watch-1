@@ -1,5 +1,5 @@
 import { Film } from '../../types/types';
-import { div } from '../../utils';
+import { div } from '../../utils/math-utils';
 
 function DetailsTab({ film }: { film: Film }): JSX.Element {
   return (

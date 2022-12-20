@@ -1,41 +1,50 @@
-import Header from '../../components/header/header';
-import { useAppDispatch } from '../../hooks';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import FilmList from '../../components/film-list/film-list';
+import Footer from '../../components/footer/footer';
+import AuthHeader from '../../components/header/user-block-auth';
+import LoadingScreen from '../../components/loading-components/loading-screen';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchFavoriteFilmsAction } from '../../store/api-actions';
+import { getFavoriteFilms, getFavoriteLoading } from '../../store/film-process/film-process-selectors';
 import { resetAmountToShow } from '../../store/main-data/main-data';
 
 function MyListPage(): JSX.Element {
   const dispatch = useAppDispatch();
   dispatch(resetAmountToShow());
+
+  const favoriteFilms = useAppSelector(getFavoriteFilms);
+  const isLoading = useAppSelector(getFavoriteLoading);
+
+  useEffect(() => {
+    dispatch(fetchFavoriteFilmsAction());
+  }, [dispatch]);
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
   return (
     <div className="user-page">
-      <Header />
-      <section className="catalog">
-        <h2 className="catalog__title visually-hidden">Catalog</h2>
-
-        <div className="catalog__films-list">
-          <article className="small-film-card catalog__films-card">
-            <div className="small-film-card__image">
-              <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175" />
-            </div>
-            <h3 className="small-film-card__title">
-              <a className="small-film-card__link" href="film-page.html">Fantastic Beasts: The Crimes of Grindelwald</a>
-            </h3>
-          </article>
-        </div>
-      </section>
-
-      <footer className="page-footer">
+      <header className="page-header user-page__head">
         <div className="logo">
-          <a href="main.html" className="logo__link logo__link--light">
+          <Link to='/' className="logo__link">
             <span className="logo__letter logo__letter--1">W</span>
             <span className="logo__letter logo__letter--2">T</span>
             <span className="logo__letter logo__letter--3">W</span>
-          </a>
+          </Link>
         </div>
 
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
-      </footer>
+        <h1 className="page-title user-page__title">My list
+          <span className="user-page__film-count">{favoriteFilms?.length}</span>
+        </h1>
+        <AuthHeader />
+      </header>
+      <section className="catalog">
+        <h2 className="catalog__title visually-hidden">Catalog</h2>
+        <FilmList films={favoriteFilms} notFoundMessage={'You haven`t added films in favorite list yet'} />
+      </section>
+      <Footer />
     </div>
   );
 }

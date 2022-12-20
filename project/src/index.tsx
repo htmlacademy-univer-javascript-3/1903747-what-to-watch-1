@@ -5,7 +5,6 @@ import App from './components/app/app';
 import { checkAuthAction, fetchFilmsAction } from './store/api-actions';
 import { store } from './store/index';
 
-
 store.dispatch(checkAuthAction());
 store.dispatch(fetchFilmsAction());
 

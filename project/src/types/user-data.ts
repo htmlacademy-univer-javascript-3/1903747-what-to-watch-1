@@ -7,4 +7,5 @@ export type UserData = {
 	id: number;
 	login: string;
 	token: string;
+	avatarUrl: string;
   }

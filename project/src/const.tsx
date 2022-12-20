@@ -24,13 +24,15 @@ export enum APIRoute {
   PromoFilm = '/promo',
   Login = '/login',
   Reviews = '/comments',
-  Logout = '/logout'
+  Logout = '/logout',
+  Favorite = '/favorite'
 }
 
 export enum NameSpace {
   MainData = 'MAINDATA',
   User = 'USER',
-  Film = 'FILM'
+  Film = 'FILM',
+  Player = 'PLAYER'
 }
 
 export const TIMEOUT_SHOW_ERROR = 5000;

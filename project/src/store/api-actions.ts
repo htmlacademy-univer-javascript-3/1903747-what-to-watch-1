@@ -6,6 +6,7 @@ import { dropToken, saveToken } from '../services/token';
 import { UserData, AuthData } from '../types/user-data';
 import { ApiReview, Reviews } from '../types/review';
 import { ProcessErrorHandler } from '../services/process-error-handler';
+import { AppDispatch, PostFavoriteStatus } from '../types/state';
 
 export const fetchFilmsAction = createAsyncThunk<Films, undefined, {
   extra: AxiosInstance;
@@ -79,12 +80,46 @@ export const fetchSimilarFilmsAction = createAsyncThunk<Films, number, {
 
   }
 );
-export const checkAuthAction = createAsyncThunk<void, undefined, {
+
+export const fetchFavoriteFilmsAction = createAsyncThunk<Films, undefined, {
+  extra: AxiosInstance;
+}>(
+  'films/loadFavoriteFilms',
+  async (_arg, { extra: api }) => {
+    try {
+      const { data } = await api.get<Films>(`${APIRoute.Favorite}`);
+      return data;
+    } catch {
+      ProcessErrorHandler('Не удалось получить список похожих фильмов');
+      throw new Error();
+    }
+  }
+);
+
+export const fetchPostFavoriteAction = createAsyncThunk<void, PostFavoriteStatus, {
+  dispatch: AppDispatch;
+  extra: AxiosInstance;
+}>(
+  'films/postFavoriteFilm',
+  async ({ id, isFavorite }, { dispatch, extra: api }) => {
+    try {
+      const favorite = isFavorite ? 1 : 0;
+      await api.post(`${APIRoute.Favorite}/${id}/${favorite}`);
+      dispatch(fetchFavoriteFilmsAction());
+    } catch {
+      ProcessErrorHandler('Не удалось отправить комментарий');
+      throw new Error();
+    }
+  }
+);
+
+export const checkAuthAction = createAsyncThunk<string, undefined, {
   extra: AxiosInstance;
 }>(
   'user/checkAuth',
   async (_arg, { extra: api }) => {
-    await api.get(APIRoute.Login);
+    const { data: { avatarUrl } } = await api.get<UserData>(APIRoute.Login);
+    return avatarUrl;
   }
 );
 
@@ -102,19 +137,19 @@ export const fetchPostReview = createAsyncThunk<void, ApiReview, {
   }
 );
 
-export const loginAction = createAsyncThunk<void, AuthData, {
+export const loginAction = createAsyncThunk<string, AuthData, {
   extra: AxiosInstance;
 }>(
   'user/login',
   async ({ login: email, password }, { extra: api }) => {
     try {
-      const { data: { token } } = await api.post<UserData>(APIRoute.Login, { email, password });
+      const { data: { token, avatarUrl } } = await api.post<UserData>(APIRoute.Login, { email, password });
       saveToken(token);
+      return avatarUrl;
     } catch {
       ProcessErrorHandler('Не удалось авторизоватсья');
       throw new Error();
     }
-
   },
 );
 

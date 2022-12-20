@@ -2,7 +2,7 @@ import MainPage from '../../pages/main-page/main-page';
 import AddReviewPage from '../../pages/add-review-page/add-review-page';
 import AuthorizationPage from '../../pages/authorization-page/authorization-page';
 import MyListPage from '../../pages/my-list-page/my-list-page';
-import Page404 from '../../pages/404Page/404Page';
+import Page404 from '../../pages/not-found-page/not-found-page';
 import MoviePage from '../../pages/movie-page/movie-page';
 import PlayerPage from '../../pages/player-page/player-page';
 import { AppRouteProps } from '../../const';
