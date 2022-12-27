@@ -41,6 +41,7 @@ export type FilmData = {
     data: Film | null;
     reviews: Reviews;
     isLoading: boolean;
+	isReviewLoading: boolean;
   };
   similarFilms: {
     data: Films | null;

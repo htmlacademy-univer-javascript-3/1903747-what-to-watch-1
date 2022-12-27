@@ -9,6 +9,7 @@ export const getFilmsLoading = (state: State): boolean => state[NameSpace.Film].
 export const getFilm = (state: State): Film | null => state[NameSpace.Film].currentFilm.data;
 export const getFilmLoading = (state: State): boolean | null => state[NameSpace.Film].currentFilm.isLoading;
 export const getReviews = (state: State): Reviews => state[NameSpace.Film].currentFilm.reviews;
+export const getReviewsLoading = (state: State): boolean | null => state[NameSpace.Film].currentFilm.isReviewLoading;
 
 export const getSimilar = (state: State): Films | null => state[NameSpace.Film].similarFilms.data;
 export const getSimilarLoading = (state: State): boolean => state[NameSpace.Film].similarFilms.isLoading;

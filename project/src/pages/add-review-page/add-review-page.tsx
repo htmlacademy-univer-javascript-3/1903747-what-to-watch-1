@@ -14,6 +14,7 @@ function AddReviewPage(): JSX.Element {
   const id = Number(useParams().id);
   const film = useAppSelector(getFilms).find((currentFilm) => currentFilm.id === id);
   const isLoading = useAppSelector(getFilmsLoading);
+
   if (isLoading) {
     return (<LoadingScreen />);
   }

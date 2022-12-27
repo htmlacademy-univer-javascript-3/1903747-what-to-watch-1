@@ -17,6 +17,7 @@ const initialState: FilmData = {
     data: null,
     isLoading: true,
     reviews: [],
+    isReviewLoading: false,
   },
   similarFilms: {
     data: null,
@@ -74,8 +75,12 @@ export const filmData = createSlice({
         state.similarFilms.data = action.payload;
         state.similarFilms.isLoading = false;
       })
+      .addCase(fetchReviewsAction.pending, (state) => {
+        state.currentFilm.isReviewLoading = true;
+      })
       .addCase(fetchReviewsAction.fulfilled, (state, action) => {
         state.currentFilm.reviews = action.payload;
+        state.currentFilm.isReviewLoading = false;
       })
       .addCase(fetchFavoriteFilmsAction.pending, (state) => {
         state.favoriteFilms.isLoading = true;
