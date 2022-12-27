@@ -12,13 +12,16 @@ type CardProps = {
 function Card({ id, name, posterImageGreat, videoSrc}: CardProps): JSX.Element {
   const [isFocused, setIsFocused] = React.useState(false);
   let mouseTimer: string | number | NodeJS.Timeout | undefined;
+
+  const handleMouseLeave = () => {
+    clearTimeout(mouseTimer);
+    setIsFocused(false);
+  };
+
   return (
     <article className="small-film-card catalog__films-card" onMouseEnter={() => {
       mouseTimer = setTimeout(() => setIsFocused(true), 1000);
-    }} onMouseLeave={() => {
-      clearTimeout(mouseTimer);
-      setIsFocused(false);
-    }}
+    }} onMouseLeave={handleMouseLeave}
     >
       <div className="small-film-card__image">
         {isFocused ? <PreviewPlayer videoSrc={videoSrc} /> : <img src={posterImageGreat} alt={name } width="280" height="175" />}
