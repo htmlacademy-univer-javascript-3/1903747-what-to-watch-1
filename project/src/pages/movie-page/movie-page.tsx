@@ -93,7 +93,7 @@ function MoviePage(): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
           <FilmList
-            films={similarFilms.filter((filmInArray) => film.genre === filmInArray.genre && filmInArray.id !== film.id)}
+            films={similarFilms.filter((filmInArray) => filmInArray.id !== film.id)}
             amountToShow={4}
             notFoundMessage={'We couldn&apos;t find any movies similar to this one :&#40;'}
           />
