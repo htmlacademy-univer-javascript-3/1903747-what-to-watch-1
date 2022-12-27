@@ -1,6 +1,6 @@
 import { Films } from '../../types/types';
 import { unID } from '../../utils/film-utils';
-import Card from '../card/card';
+import Card from '../film-card/film-card';
 
 type FilmListProps = {
   films: Films | null;
